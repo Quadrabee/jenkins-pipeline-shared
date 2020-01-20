@@ -5,23 +5,57 @@
  */
 def call(String buildStatus = 'STARTED', String channel) {
   // build status of null means successful
-  buildStatus =  buildStatus ?: 'SUCCESS'
+  buildStatus = buildStatus ?: 'SUCCESS'
 
   // Default values
-  def color = 'RED'
-  def colorCode = '#FF0000'
-  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-  def summary = "${subject} (${env.BUILD_URL})"
+  def buildPhase = 'failed';
+  def color = '#c21f2d'
 
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
-    color = 'YELLOW'
-    colorCode = '#FFFF00'
+    color = '#d59e27'
+    buildPhase = 'started';
   } else if (buildStatus == 'SUCCESS') {
-    color = 'GREEN'
-    colorCode = '#00FF00'
+    color = '#349b4a'
+    buildPhase = 'succeeded';
   }
 
+  def subject = "BuildJob ${buildPhase} for _${env.JOB_NAME} [${env.BUILD_NUMBER}]_"
+  def summary = "<${env.BUILD_URL}|See build logs>"
+
+  def blocks = [
+    [
+      "type": "section",
+      "text": [
+        "type": "mrkdwn",
+        "text": subject
+      ]
+    ],
+    [
+      "type": "context",
+      "elements": [
+        // [
+        //   "type": "image",
+        //   "image_url": "https://img2.freepng.es/20180515/zxe/kisspng-jenkins-docker-continuous-delivery-installation-so-5afa799e222331.1197773615263645741398.jpg",
+        //   "alt_text": "images"
+        // ],
+        [
+          "type": "mrkdwn",
+          "text": summary
+        ]
+      ]
+    ]
+  ]
+
+  def attachments = [
+    [
+      "blocks": blocks,
+      "color": color
+    ]
+  ]
+
+  print attachments
+
   // Send notifications
-  slackSend (color: colorCode, message: summary, channel: channel)
+  slackSend (attachments: attachments, channel: channel)
 }
