@@ -20,7 +20,7 @@ def call(String buildStatus = 'STARTED', String channel) {
     buildPhase = 'succeeded';
   }
 
-  def subject = "BuildJob ${buildPhase} for _${env.JOB_NAME} [${env.BUILD_NUMBER}]_"
+  def subject = "BuildJob ${buildPhase} on branch '${env.BRANCH_NAME}' (_${env.JOB_NAME}_)"
 
   if (env.CHANGE_ID) {
     subject = "BuildJob ${buildPhase} for PR *<${pullRequest.url}|#${pullRequest.number} ${pullRequest.title}>*"
