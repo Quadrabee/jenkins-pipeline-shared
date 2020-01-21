@@ -62,5 +62,5 @@ def call(String buildStatus = 'STARTED', String channel) {
   print attachments
 
   // Send notifications
-  slackSend (attachments: attachments, channel: channel)
+  slackSend (attachments: attachments, channel: channel, notifyCommitters: true)
 }
