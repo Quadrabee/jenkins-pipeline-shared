@@ -17,6 +17,12 @@ pipeline {
       }
     }
 
+    stage('commiters') {
+      steps {
+        slackSend notifyCommitters: true, message: "Build done"
+      }
+    }
+
     stage ('@llambeau') {
       steps {
         slackSend(color: 'good', message: 'just a test @llambeau', channel: SLACK_CHANNEL)
