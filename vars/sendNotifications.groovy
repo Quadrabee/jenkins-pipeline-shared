@@ -63,5 +63,9 @@ def call(String buildStatus = 'STARTED', String channel) {
 
   // Send notifications
   slackSend (attachments: attachments, channel: channel)
-  slackSend (attachments: attachments, notifyCommitters: true)
+
+  // Warn/Greet committers for success/fail only
+  if (buildStatus != 'STARTED') {
+    slackSend (attachments: attachments, notifyCommitters: true)
+  }
 }
