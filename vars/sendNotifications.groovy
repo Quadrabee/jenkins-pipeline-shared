@@ -11,6 +11,10 @@ def call(String buildStatus = 'STARTED', String channel) {
   def buildPhase = 'failed';
   def color = '#c21f2d'
 
+  if (env.CHANGE_ID) {
+    print pullRequest
+  }
+
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
     color = '#d59e27'
