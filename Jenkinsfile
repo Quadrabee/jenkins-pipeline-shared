@@ -11,9 +11,21 @@ pipeline {
 
   stages {
 
-    stage ('Start') {
+    stage ('channel') {
       steps {
         sendNotifications('STARTED', SLACK_CHANNEL)
+      }
+    }
+
+    stage('commiters') {
+      steps {
+        slackSend notifyCommitters: true, message: "Build done"
+      }
+    }
+
+    stage ('@llambeau') {
+      steps {
+        slackSend(color: 'good', message: 'just a test @llambeau', channel: SLACK_CHANNEL)
       }
     }
   }
