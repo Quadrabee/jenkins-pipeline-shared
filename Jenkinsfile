@@ -36,5 +36,9 @@ pipeline {
 }
 
 def get_docker_tag() {
-  return TAG_NAME || 'latest';
+  def TAG_NAME = binding.variables.get("TAG_NAME")
+  if (TAG_NAME != null) {
+    return TAG_NAME
+  }
+  return 'latest'
 }
