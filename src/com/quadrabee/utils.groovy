@@ -97,9 +97,9 @@ def populateGlobalVariables = {
 }
 
 def test() {
-  sh "./gradlew ${utils.gradleDefaultSwitches} clean build ${utils.gradleAdditionalTestTargets} ${utils.gradleAdditionalSwitches} --refresh-dependencies"
+  sh "./gradlew ${gradleDefaultSwitches} clean build ${gradleAdditionalTestTargets} ${gradleAdditionalSwitches} --refresh-dependencies"
   step $class: 'JUnitResultArchiver', testResults: '**/rspec*.xml'
-  utils.populateGlobalVariables()
+  populateGlobalVariables()
 
   def buildColor = currentBuild.result == null ? "good" : "warning"
   def buildStatus = currentBuild.result == null ? "Success" : currentBuild.result
