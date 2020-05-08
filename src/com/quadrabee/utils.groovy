@@ -96,7 +96,7 @@ def populateGlobalVariables = {
     testSummary = getTestSummary()
 }
 
-def test = {
+def test() {
   sh "./gradlew ${utils.gradleDefaultSwitches} clean build ${utils.gradleAdditionalTestTargets} ${utils.gradleAdditionalSwitches} --refresh-dependencies"
   step $class: 'JUnitResultArchiver', testResults: '**/rspec*.xml'
   utils.populateGlobalVariables()
