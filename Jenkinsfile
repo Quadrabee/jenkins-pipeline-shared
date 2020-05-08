@@ -26,11 +26,8 @@ pipeline {
   }
 
   post {
-    success {
-      sendNotifications('SUCCESS', SLACK_CHANNEL)
-    }
-    failure {
-      sendNotifications('FAILED', SLACK_CHANNEL)
+    always {
+      newTest(SLACK_CHANNEL)
     }
   }
 }
