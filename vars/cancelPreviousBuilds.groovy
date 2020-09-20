@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 /**
- * Send notifications based on build status string
+ * Cancel previous builds on the same branch/PR/tag
  */
 def call(String buildStatus = 'STARTED', String channel) {
   def jobname = env.JOB_NAME
