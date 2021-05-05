@@ -3,7 +3,7 @@
 /**
  * Send notifications based on build status string
  */
-def call(String buildStatus = 'STARTED', String channel) {
+def call(String buildStatus = 'STARTED', String channel, String subjectOverride = null) {
   // build status of null means successful
   buildStatus = buildStatus ?: 'SUCCESS'
 
@@ -20,7 +20,7 @@ def call(String buildStatus = 'STARTED', String channel) {
     buildPhase = 'succeeded';
   }
 
-  def subject = "BuildJob ${buildPhase} (_${env.JOB_NAME}_)"
+  def subject = subjectOverride ?: "BuildJob ${buildPhase} (_${env.JOB_NAME}_)"
 
   if (env.TAG_NAME) {
     subject = "BuildJob ${buildPhase} for release *${env.TAG_NAME}*"
